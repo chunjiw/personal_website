@@ -9,7 +9,7 @@ tags:
   - R4DS
 ---
 
-_R for Data Science_ ([R4DS](http://r4ds.had.co.nz/)) is an excellent book about doing data science with R. Here is some solutions I came up with while reading the book. 
+_R for Data Science_ ([R4DS](http://r4ds.had.co.nz/)) is an excellent book about doing data science with R. Here are some solutions I came up with while reading the book. 
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
