@@ -1,0 +1,29 @@
+---
+title: Selected Solutions to Exercises in R for Data Science
+author: Chunji Wang
+date: '2017-09-25'
+slug: selected-solutions-to-exercises-in-r-for-data-science
+categories: []
+tags:
+  - R
+  - R4DS
+---
+
+
+
+<p><em>R for Data Science</em> (<a href="http://r4ds.had.co.nz/">R4DS</a>) is an excellent book about doing data science with R. Here is some solutions I came up with while reading the book.</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<p>3.6.1.6 “Recreate the R code necessary to generate the following graphs”: the last graph</p>
+<pre class="r"><code>ggplot(data = mpg, aes(x = displ, y = hwy)) +
+  geom_point(color = &quot;white&quot;, size = 4) +
+  geom_point(aes(color = drv))</code></pre>
+<p><img src="/portfolio/2017-09-25-selected-solutions-to-exercises-in-r-for-data-science_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>5.3.1.1 “How could you use <code>arrange()</code> to sort all missing values to the start? (Hint: use <code>is.na()</code>)”:</p>
+<pre class="r"><code>df &lt;- tibble(x = c(5, 2, NA))
+arrange(df, !is.na(x), x)</code></pre>
+<pre><code>## # A tibble: 3 x 1
+##       x
+##   &lt;dbl&gt;
+## 1    NA
+## 2     2
+## 3     5</code></pre>
