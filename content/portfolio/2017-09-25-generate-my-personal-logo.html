@@ -1,0 +1,30 @@
+---
+draft: true
+title: Generate My Personal Logo
+author: Chunji Wang
+date: '2017-09-25'
+slug: generate-my-personal-logo
+categories: []
+tags:
+  - R
+---
+
+
+
+<p>I generated my personal logo with the following code. It was a bit fun.</p>
+<pre class="r"><code>library(tidyverse)
+
+gap &lt;- 0.0
+square &lt;- tibble(y = c(0,1,2, 1), x = c(0,1,0,-1))
+square2 &lt;- mutate(square, x = x - 1 - gap, id = 2, color = 1)
+square4 &lt;- mutate(square, x = x + 1 + gap, id = 4, color = 1)
+square3 &lt;- mutate(square, y = y + 1 + gap, id = 3, color = 2)
+square1 &lt;- mutate(square, x = x - 2 - 2*gap, y = y + 1 + gap, id = 1, color = 2)
+square5 &lt;- mutate(square, x = x + 2 + 2*gap, y = y + 1 + gap, id = 5, color = 2)
+squares &lt;- bind_rows(square1, square2, square3, square4, square5)
+
+ggplot(data = squares) +
+  geom_polygon(aes(x = x, y = y, group = id, fill = color), show.legend = F) +
+  coord_fixed() +
+  theme_void()</code></pre>
+<p><img src="/portfolio/2017-09-25-generate-my-personal-logo_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
