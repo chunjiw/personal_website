@@ -6,13 +6,15 @@ languageCode = "en-us"
 disqusShortname = ""
 # Enable Google Analytics by entering your tracking code
 googleAnalytics = ""
+# added 9/25/2017
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [params]
   # Style options: default (pink), blue, green, pink, red, sea, violet
   # Use custom.css for your custom styling
-  style = "default"
-  description = "Describe your website"
-  copyright = "&copy;2016 Your name or company"
+  style = "blue"
+  description = "Chunji Wang's personal website"
+  copyright = "&copy;2017 Chunji Wang"
   sidebarAbout = [
     "Data Scientist & Ph.D. in Neuroscience",
     "I am currently in the job market, eager to start my data science career. If you are interested, please contact me!"
@@ -45,11 +47,11 @@ googleAnalytics = ""
   url = "contact/"
 
   [params.social]
-  facebook      = "full page or profile url in facebook"
-  googleplus    = "full profile url in googleplus"
-  email         = "email@example.com"
-  twitter       = "full profile url in twitter"
-  linkedin      = "full profile url in linkedin"
-  stackoverflow = "full profile url in stackoverflow"
-  instagram     = "full profile url in instagram"
-  github        = "full profile url in github"
+  # facebook      = "full page or profile url in facebook"
+  # googleplus    = "full profile url in googleplus"
+  email         = "chunjiw@gmail.com"
+  twitter       = "https://twitter.com/chunjiw"
+  linkedin      = "https://linkedin.com/in/chunjiw"
+  # stackoverflow = "full profile url in stackoverflow"
+  # instagram     = "full profile url in instagram"
+  github        = "https://github.com/chunjiw"
