@@ -29,5 +29,4 @@ Third, work shall bring achievements and a feeling of fulfillment. The outcome o
 
 Fourth, good work shall respect truth and reality. A play of words like propaganda is not what I would like to do. 
 
-#### My Worldview
 
