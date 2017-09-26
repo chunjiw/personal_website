@@ -13,6 +13,7 @@ _R for Data Science_ ([R4DS](http://r4ds.had.co.nz/)) is an excellent book about
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
+library(nycflights13)
 ```
 
 
@@ -30,6 +31,12 @@ df <- tibble(x = c(5, 2, NA))
 arrange(df, !is.na(x), x)
 ```
 
-
+5.6.7.2
+```{r}
+not_cancelled <- flights %>% 
+  filter(!is.na(dep_delay), !is.na(arr_delay))
+not_cancelled %>% count(tailnum, wt = distance)
+not_cancelled %>% group_by(tailnum) %>% summarize(n = sum(distance))
+```
 
 

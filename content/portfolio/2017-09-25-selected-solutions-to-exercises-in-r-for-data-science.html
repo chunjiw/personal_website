@@ -12,7 +12,8 @@ tags:
 
 
 <p><em>R for Data Science</em> (<a href="http://r4ds.had.co.nz/">R4DS</a>) is an excellent book about doing data science with R. Here are some solutions I came up with while reading the book.</p>
-<pre class="r"><code>library(tidyverse)</code></pre>
+<pre class="r"><code>library(tidyverse)
+library(nycflights13)</code></pre>
 <p>3.6.1.6 “Recreate the R code necessary to generate the following graphs”: the last graph</p>
 <pre class="r"><code>ggplot(data = mpg, aes(x = displ, y = hwy)) +
   geom_point(color = &quot;white&quot;, size = 4) +
@@ -27,3 +28,36 @@ arrange(df, !is.na(x), x)</code></pre>
 ## 1    NA
 ## 2     2
 ## 3     5</code></pre>
+<p>5.6.7.2</p>
+<pre class="r"><code>not_cancelled &lt;- flights %&gt;% 
+  filter(!is.na(dep_delay), !is.na(arr_delay))
+not_cancelled %&gt;% count(tailnum, wt = distance)</code></pre>
+<pre><code>## # A tibble: 4,037 x 2
+##    tailnum      n
+##      &lt;chr&gt;  &lt;dbl&gt;
+##  1  D942DN   3418
+##  2  N0EGMQ 239143
+##  3  N10156 109664
+##  4  N102UW  25722
+##  5  N103US  24619
+##  6  N104UW  24616
+##  7  N10575 139903
+##  8  N105UW  23618
+##  9  N107US  21677
+## 10  N108UW  32070
+## # ... with 4,027 more rows</code></pre>
+<pre class="r"><code>not_cancelled %&gt;% group_by(tailnum) %&gt;% summarize(n = sum(distance))</code></pre>
+<pre><code>## # A tibble: 4,037 x 2
+##    tailnum      n
+##      &lt;chr&gt;  &lt;dbl&gt;
+##  1  D942DN   3418
+##  2  N0EGMQ 239143
+##  3  N10156 109664
+##  4  N102UW  25722
+##  5  N103US  24619
+##  6  N104UW  24616
+##  7  N10575 139903
+##  8  N105UW  23618
+##  9  N107US  21677
+## 10  N108UW  32070
+## # ... with 4,027 more rows</code></pre>
