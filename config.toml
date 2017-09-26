@@ -55,3 +55,4 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   # stackoverflow = "full profile url in stackoverflow"
   # instagram     = "full profile url in instagram"
   github        = "https://github.com/chunjiw"
+  goodreads      = "https://www.goodreads.com/user/show/45921938-chunji-wang"
