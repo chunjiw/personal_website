@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 title: Generate My Personal Logo
 author: Chunji Wang
 date: '2017-09-25'
@@ -12,7 +12,9 @@ tags:
 I generated my personal logo with the following code. It was a bit fun.
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
-
+```
+The squares are represented by `x,y` coordinates, together with `id` and `color`:
+```{r}
 gap <- 0.0
 square <- tibble(y = c(0,1,2, 1), x = c(0,1,0,-1))
 square2 <- mutate(square, x = x - 1 - gap, id = 2, color = 1)
@@ -21,7 +23,9 @@ square3 <- mutate(square, y = y + 1 + gap, id = 3, color = 2)
 square1 <- mutate(square, x = x - 2 - 2*gap, y = y + 1 + gap, id = 1, color = 2)
 square5 <- mutate(square, x = x + 2 + 2*gap, y = y + 1 + gap, id = 5, color = 2)
 squares <- bind_rows(square1, square2, square3, square4, square5)
-
+```
+Logo is rendered through `geom_polygon()`:
+```{r}
 ggplot(data = squares) +
   geom_polygon(aes(x = x, y = y, group = id, fill = color), show.legend = F) +
   coord_fixed() +
