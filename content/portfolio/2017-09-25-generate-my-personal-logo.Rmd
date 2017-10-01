@@ -1,6 +1,10 @@
 ---
+image: "img/portfolio/logo.png"
+showonlyimage : true
+weight: 2
 draft: false
 title: Generate My Personal Logo
+description: "Generating logos with ggplot2"
 author: Chunji Wang
 date: '2017-09-25'
 slug: generate-my-personal-logo
@@ -10,6 +14,8 @@ tags:
 ---
 
 I generated my personal logo with the following code. It was a bit fun.
+<!--more-->
+
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 ```
