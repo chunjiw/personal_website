@@ -1,7 +1,6 @@
 ---
 image: "img/portfolio/logo.png"
 showonlyimage : true
-weight: 2
 draft: false
 title: Generate My Personal Logo
 description: "Generating logos with ggplot2"
@@ -13,8 +12,8 @@ tags:
   - R
 ---
 
-I generated my personal logo with the following code. It was a bit fun.  
-![](logo.png)
+I generated my personal logo with the following code. It was fun.  
+![](/img/portfolio/logo.png)
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)

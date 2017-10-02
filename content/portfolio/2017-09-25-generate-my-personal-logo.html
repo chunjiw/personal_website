@@ -1,7 +1,6 @@
 ---
 image: "img/portfolio/logo.png"
 showonlyimage : true
-weight: 2
 draft: false
 title: Generate My Personal Logo
 description: "Generating logos with ggplot2"
@@ -15,8 +14,8 @@ tags:
 
 
 
-<p>I generated my personal logo with the following code. It was a bit fun.<br />
-<img src="logo.png" /></p>
+<p>I generated my personal logo with the following code. It was fun.<br />
+<img src="/img/portfolio/logo.png" /></p>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <p>The squares are represented by <code>x,y</code> coordinates, together with <code>id</code> and <code>color</code>:</p>
 <pre class="r"><code>gap &lt;- 0.0
@@ -30,6 +29,6 @@ squares &lt;- bind_rows(square1, square2, square3, square4, square5)</code></pre
 <p>Logo is rendered through <code>geom_polygon()</code>:</p>
 <pre class="r"><code>ggplot(data = squares) +
   geom_polygon(aes(x = x, y = y, group = id, fill = color), show.legend = F) +
-  coord_fixed(xlim = c(-2.8,2.8), ylim = c(0,5.6)) +
+  coord_fixed() +
   theme_void()</code></pre>
 <p><img src="/portfolio/2017-09-25-generate-my-personal-logo_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
