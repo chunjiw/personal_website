@@ -1,0 +1,152 @@
+---
+draft: false
+image: "img/portfolio/wordpred.png"
+showonlyimage: true
+title: Word Prediction via Ngram Model
+author: Chunji Wang
+date: '2017-10-01'
+slug: word-prediction-via-ngram-model
+categories: []
+tags:
+  - R
+  - Shiny
+  - ngram
+---
+
+
+
+<p>If you don’t know what it is, try it out <a href="https://chunjiw.shinyapps.io/wordpred/">here</a> first! If you just want to see the code, checkout my <a href="https://github.com/chunjiw/wordpred">github</a>.</p>
+<p>OK, if you tried it out, the concept should be easy for you to grasp. A gram is a unit of text; in our case, a gram is a word. In this application we use trigram – a piece of text with three grams, like “how are you” or “today I meet”. If we accumulate enough trigrams, we will know what trigrams appear more often than others. Such is the mechanism behind word prediction. You can go to <a href="https://books.google.com/ngrams">Google Ngram Viewer</a> to play with it.</p>
+<p>Why do we choose trigram, rather than bigram (two-gram) or 4-gram? Bigram is not particularly interesting; 4-gram model requires a much larger amount of raw text to train. You’ll see what I mean.</p>
+<p>This project is inspired by MOOC course <a href="https://www.coursera.org/learn/data-science-project">Data Science Capstone</a> on Coursera, which is brought to my attention by <a href="https://github.com/Rongpeng/ds_capstone">Ron</a>. I didn’t take the class though; I invited Google as my teacher and came up with the solution below.</p>
+<div id="build-the-model" class="section level2">
+<h2>Build the model</h2>
+<p>In this section I show you how to build the trigram model, step by step. First, let’s load some packages:</p>
+<pre class="r"><code>library(tidyverse)
+library(tau)
+library(tm)
+library(hash)</code></pre>
+<p>Second, load the data. The data can be downloaded <a href="https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip">here</a>. Unzip the data and put it into a <code>data/</code> folder:</p>
+<pre class="r"><code>blog.full &lt;- readLines(&quot;data/en_US/en_US.blogs.txt&quot;)
+news.full &lt;- readLines(&quot;data/en_US/en_US.news.txt&quot;)
+twit.full &lt;- readLines(&quot;data/en_US/en_US.twitter.txt&quot;)</code></pre>
+<p>Although the text data can be handled by a single machine, the trigram model probably will be too big; so we divide the data into 50 batches:</p>
+<pre class="r"><code># batch size
+nbatch &lt;- 50
+blog.len &lt;- ceiling(length(blog.full) / nbatch)
+news.len &lt;- ceiling(length(news.full) / nbatch)
+twit.len &lt;- ceiling(length(twit.full) / nbatch)</code></pre>
+<p>So that we can process them one by one.</p>
+<p>We define some functions for preprocessing, to remove non-English characters, twitter handles and urls:</p>
+<pre class="r"><code># preprocessing functions
+removeURL &lt;- function(x) gsub(&quot;http\\S+&quot;, &quot;&quot;, x)
+removeHash &lt;- function(x) gsub(&quot;[@#&amp;]\\S+&quot;, &quot;&quot;, x)
+# don&#39;t know how to remove location, like &quot;@ los angeles&quot;
+removeNumPunct &lt;- function(x) gsub(&quot;[^A-z[:space:]&#39;]*&quot;, &quot;&quot;, x)
+# it turns out that Japanese characters belong to [:alpha:], but not [A-z]. Absurd.</code></pre>
+<p>OK, it’s time to actually build the trigram model. Here I use a hash table to represent the model since it is fast and reliable. In the <code>for</code> loop below, we process each batch and append the result into the hash table:</p>
+<pre class="r"><code>h &lt;- hash()
+
+# loop over batches
+for (b in 1:nbatch - 1) {
+# for (b in 12932) {
+  message(sprintf(&quot;Processing the %i-th batch&quot;, b))
+  
+  # concatenate text and preprocess
+  blog &lt;- blog.full[blog.len * b + (1:blog.len)]
+  news &lt;- news.full[news.len * b + (1:news.len)]
+  twit &lt;- twit.full[twit.len * b + (1:twit.len)]
+  bnt &lt;- c(blog, news, twit) %&gt;% 
+    removeURL() %&gt;% removeHash() %&gt;% 
+    removeNumPunct() %&gt;% tolower() %&gt;% stripWhitespace()
+  
+  # obtain trigram
+  trigram &lt;- textcnt(bnt, n=3, split=&quot; &quot;, method=&quot;string&quot;, decreasing = TRUE) 
+  
+  # create hash table for fast prediction
+  for (i in 1:length(trigram)) {
+    if (trigram[i] &lt; 4) {
+      break
+    } else {
+      gram &lt;- strsplit(names(trigram[i]), split = &#39; &#39;)[[1]]
+      history &lt;- paste0(gram[1:2], collapse = &#39; &#39;)
+      candidate &lt;- gram[3]
+      count &lt;- trigram[[i]]
+      if (candidate %in% h[[history]]$candidate) {
+        index &lt;- h[[history]]$candidate == candidate
+        h[[history]]$count[index] &lt;- h[[history]]$count[index] + count
+      } else {
+        h[[history]]$candidate &lt;- c(h[[history]]$candidate, candidate)
+        h[[history]]$count &lt;- c(h[[history]]$count, count)
+      }
+    }
+  }
+  gc()
+}</code></pre>
+<p>The hash table is a set of key-value pairs, with keys being the first two words of trigrams, and the values being the last word, and its frequency. For example, <code>h[[&quot;how are&quot;]]</code> can be <code>list(c(&quot;you&quot;,&quot;things&quot;), c(9,5))</code>, meaning the trigram “how are you” occurs 9 times, and “how are things” occurs 5 times.</p>
+</div>
+<div id="serve-the-app" class="section level2">
+<h2>Serve the App</h2>
+<p>Once we obtain the hash table, we can use it to build the app. We simply look at the last two words that the user types, and return the most probable words in the list. Here we use shiny to deploy the app. For more information, go to <a href="https://shiny.rstudio.com/">Shiny</a>.</p>
+<pre class="r"><code>library(shiny)
+library(hash)
+load(&quot;hashtable.Rdata&quot;)
+
+ui &lt;- fluidPage(
+  
+  titlePanel(&quot;Word Prediction via Ngram&quot;),
+  
+  hr(),
+  
+  fluidRow(
+    column(5, textInput(&quot;userInput&quot;, &quot;Please type here ... type at least 
+                        two words to enable prediction.&quot;)),
+    column(7, h3(verbatimTextOutput(outputId = &quot;distPrediction&quot;)))
+  ),
+  
+  hr(),
+  
+  fluidRow(
+    column(8, h3(&quot;What is this?&quot;),
+              h4(&quot;This app predicts the next word you will most probably type, based on 
+                 previous two words that you already typed. This app uses a tri-gram model
+                 that is trained over ~500 MB text data from blogs, news articles and 
+                 twitter. Get the source code &quot;, 
+                 tags$a(href=&quot;https://github.com/chunjiw/wordpred&quot;, &quot;here!&quot;)))
+  ),
+  
+  hr(),
+  h4(&quot;Made by Chunji Wang&quot;)
+
+)
+
+server &lt;- function(input, output) {
+  output$distPrediction &lt;- renderText({
+    userInput &lt;- trimws(input$userInput)
+    userInput &lt;- gsub(&#39;\\s+&#39;, &#39; &#39;, userInput)
+    pred.sentense &lt;- paste(userInput, &quot;...&quot;)
+    words &lt;- strsplit(tolower(userInput), split = &#39; &#39;)[[1]]
+    if (length(words) &gt;= 2) {
+      history &lt;- paste0(tail(words, 2), collapse = &#39; &#39;)
+      candidates &lt;- h[[history]]$candidate
+      candidates[candidates == &#39;i&#39;] &lt;- &#39;I&#39;
+      if (length(candidates)) {
+        maxDisplay &lt;- min(5, length(candidates))
+        for (i in 1:maxDisplay) {
+          pred.sentense &lt;- paste(pred.sentense,
+                                 paste(userInput, candidates[i], sep = &#39; &#39;),
+                                 sep = &#39;\n&#39;)
+        }
+      }
+      pred.sentense
+    } else {
+      userInput
+    }
+    })
+  
+}
+
+shinyApp(ui = ui, server = server)</code></pre>
+<p>Voila! Now send the link of your app to your friends and enjoy some thumb up!</p>
+<p>Leave comments below if you have questions! Or if you also successfully made the app!</p>
+</div>
