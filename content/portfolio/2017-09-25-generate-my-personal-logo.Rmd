@@ -13,8 +13,8 @@ tags:
   - R
 ---
 
-I generated my personal logo with the following code. It was a bit fun.
-<!--more-->
+I generated my personal logo with the following code. It was a bit fun.  
+![](logo.png)
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -36,6 +36,5 @@ ggplot(data = squares) +
   geom_polygon(aes(x = x, y = y, group = id, fill = color), show.legend = F) +
   coord_fixed() +
   theme_void()
-
 ```
 
