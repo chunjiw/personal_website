@@ -1,0 +1,74 @@
+---
+title: 'Vocabulous 0.1: Build Your Own Vocabulary Review Book'
+author: Chunji Wang
+date: '2017-10-26'
+slug: vocabulous-0-1-build-your-own-vocabulary-review-book
+categories: []
+tags:
+  - anki
+---
+
+
+
+<div id="motivation" class="section level3">
+<h3>Motivation</h3>
+<p>Exactly 11 months ago, I wrote a blog post titled <a href="https://chunjiw.wordpress.com/2016/11/27/how-to-break-vocabulary-bottleneck/"><strong>How to Break Vocabulary Bottleneck</strong></a>, in which I talked about how learning new English words has been a challenge for college graduates. I think there are basically three reasons why it has become a challenge:</p>
+<ol style="list-style-type: decimal">
+<li>There are no exams, texts, and deadlines anymore as sources of motivation;</li>
+<li>Exposure to new words is not enough for memorization given the nature of a long tail distribution of words;</li>
+<li>We are constantly distracted.</li>
+</ol>
+<p>These problems can be solved one at a time:</p>
+<ol style="list-style-type: decimal">
+<li>Focus on the words we come across in our lives, such that we have a motivation to memorize them;</li>
+<li>Expose ourselves to those words regularly;</li>
+<li>Set up a good reminder system.</li>
+</ol>
+<p>It turns out that all these components are available: we just need to connect them together, to somehow record new words, feed them into some reminder app, and we should be OK!</p>
+</div>
+<div id="solution" class="section level3">
+<h3>Solution</h3>
+<p>Here I am proud to present Vocabulous, which helps you collect words that you have looked up before, generate flashcards about them, and remind you to review them according to human memory features. I want to thank my friend Doug Schafer for pointing me to <a href="https://apps.ankiweb.net/">Anki</a> and the name of this project.</p>
+<div id="why-vocabulous" class="section level4">
+<h4>Why Vocabulous</h4>
+<p>If you don’t think learning new words is important, then you really don’t need to read the following. If you do, here’s my pitch:</p>
+<ol style="list-style-type: decimal">
+<li>Vocabulous is a personal vocabulary review book. You have full control over what words are included;</li>
+<li>Definitions are from the most authoritative dictionary – Oxford English Dictionary;</li>
+<li>The review schedule is optimally tuned to fit human memory features.</li>
+</ol>
+<p>Note that this project is far from mature right now; it requires a little of your work to get up and running. Please proceed only if you truly think this is necessary.</p>
+</div>
+<div id="get-the-words" class="section level4">
+<h4>1. Get the words</h4>
+<ul>
+<li>Look up a word by Googling it through the “define” keyword. For example, type “define divest”, Google will give you the definition of “divest”;</li>
+<li>Download your searches data via <a href="https://takeout.google.com/settings/takeout">Google Takeout</a>. Only download the product “Searches”, otherwise the file is going to be too big.</li>
+</ul>
+</div>
+<div id="get-the-reminder-app-anki" class="section level4">
+<h4>2. Get the reminder app Anki</h4>
+<ul>
+<li>Go to Anki <a href="https://apps.ankiweb.net/docs/beta.html">App</a> to install Anki onto your computer. Make sure to install the 2.1 beta.</li>
+<li>Go to Anki <a href="https://ankiweb.net/">Web</a> and create a profile.</li>
+</ul>
+</div>
+<div id="get-vocabulous-add-on" class="section level4">
+<h4>3. Get Vocabulous add-on</h4>
+<ul>
+<li>Open Anki on your computer, go to Tools -&gt; Add-ons -&gt; Get Add-ons;</li>
+<li>Type in 602485415 and click “OK”;</li>
+<li>Click “View Files” and open the text file <code>__init__.py</code>;</li>
+<li>Edit it such that it points to the directory where you saved your Google searches history;</li>
+<li>Close Anki and reopen it;</li>
+</ul>
+</div>
+<div id="generate-flashcards" class="section level4">
+<h4>4. Generate flashcards</h4>
+<ul>
+<li>Go to Tools and click Vocabulous. Please wait patiently. Each word requires about 2 seconds to process, so drink a coffee and then come back;</li>
+<li>Install Anki on your phone and sync.</li>
+</ul>
+<p>Congratulations!</p>
+</div>
+</div>

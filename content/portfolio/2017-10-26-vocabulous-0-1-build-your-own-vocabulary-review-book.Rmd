@@ -1,0 +1,66 @@
+---
+title: 'Vocabulous 0.1: Build Your Own Vocabulary Review Book'
+author: Chunji Wang
+date: '2017-10-26'
+slug: vocabulous-0-1-build-your-own-vocabulary-review-book
+categories: []
+tags:
+  - anki
+---
+
+### Motivation
+
+Exactly 11 months ago, I wrote a blog post titled [__How to Break Vocabulary Bottleneck__](https://chunjiw.wordpress.com/2016/11/27/how-to-break-vocabulary-bottleneck/), in which I talked about how learning new English words has been a challenge for college graduates. I think there are basically three reasons why it has become a challenge:
+
+1. There are no exams, texts, and deadlines anymore as sources of motivation;
+2. Exposure to new words is not enough for memorization given the nature of a long tail distribution of words;
+3. We are constantly distracted.
+
+These problems can be solved one at a time:
+
+1. Focus on the words we come across in our lives, such that we have a motivation to memorize them;
+2. Expose ourselves to those words regularly;
+3. Set up a good reminder system.
+
+It turns out that all these components are available: we just need to connect them together, to somehow record new words, feed them into some reminder app, and we should be OK!   
+
+### Solution
+
+Here I am proud to present Vocabulous, which helps you collect words that you have looked up before, generate flashcards about them, and remind you to review them according to human memory features. I want to thank my friend Doug Schafer for pointing me to [Anki](https://apps.ankiweb.net/) and the name of this project.
+
+#### Why Vocabulous
+
+If you don't think learning new words is important, then you really don't need to read the following. If you do, here's my pitch: 
+
+1. Vocabulous is a personal vocabulary review book. You have full control over what words are included;
+2. Definitions are from the most authoritative dictionary -- Oxford English Dictionary;
+3. The review schedule is optimally tuned to fit human memory features.
+
+Note that this project is far from mature right now; it requires a little of your work to get up and running. Please proceed only if you truly think this is necessary.
+
+#### 1. Get the words
+
+* Look up a word by Googling it through the "define" keyword. For example, type "define divest", Google will give you the definition of "divest";
+* Download your searches data via [Google Takeout](https://takeout.google.com/settings/takeout). Only download the product "Searches", otherwise the file is going to be too big.
+
+#### 2. Get the reminder app Anki
+
+* Go to Anki [App](https://apps.ankiweb.net/docs/beta.html) to install Anki onto your computer. Make sure to install the 2.1 beta.
+* Go to Anki [Web](https://ankiweb.net/) and create a profile.
+
+#### 3. Get Vocabulous add-on
+
+* Open Anki on your computer, go to Tools -> Add-ons -> Get Add-ons;
+* Type in 602485415 and click "OK";
+* Click "View Files" and open the text file `__init__.py`;
+* Edit it such that it points to the directory where you saved your Google searches history;
+* Close Anki and reopen it;
+
+#### 4. Generate flashcards
+
+* Go to Tools and click Vocabulous. Please wait patiently. Each word requires about 2 seconds to process, so drink a coffee and then come back;
+* Install Anki on your phone and sync.
+
+Congratulations!
+
+
