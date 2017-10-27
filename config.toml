@@ -17,7 +17,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   copyright = "&copy;2017 Chunji Wang"
   sidebarAbout = [
     "Data Scientist & Ph.D. in Neuroscience",
-    "I am currently in the job market, eager to start my career in data science. If you are interested, please contact me!"
+    "  "
   ]
   # Contact page
      # Since this template is static, the contact form uses www.formspree.io as a
